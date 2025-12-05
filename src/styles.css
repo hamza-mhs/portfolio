@@ -1,0 +1,991 @@
+/* styles.css */
+/* Copy this file as styles.css next to App.jsx */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap');
+
+:root {
+    /* global spacing */
+    --pad-x-hero: 224px;
+    --pad-y-header: 24px;
+    --pad-y-hero: 64px;
+    --image-radius: 0px;
+    --gap-inner: 24px;
+    --gap-small: 8px;
+
+    /* colors - dark defaults */
+    --bg: #0D0E10;
+    --fg: #FFFFFF;
+    --muted: rgba(255, 255, 255, 0.62);
+    --stroke: #202123;
+    --chip-stroke: #202123;
+    --chip-bg: transparent;
+    --kbd-bg: #2A2B2C;
+    --kbd-fg: #ffffff;
+    --button-bg: #141516;
+    --button-stroke: rgba(255, 255, 255, 0.08);
+    --email-color: #FFFFFF;
+    --shadow-elevation-dark: 0 12px 32px -8px rgba(23, 24, 28, 0.40),
+        0 6px 12px -8px rgba(23, 24, 28, 0.70),
+        0 1px 2px 0 rgba(23, 24, 28, 0.24);
+
+}
+
+.container-lock {
+    position: relative;
+    z-index: 1;
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.light {
+    --bg: #FFF;
+    --fg: #000000;
+    --muted: #707070;
+    --stroke: #EDEDED;
+    --chip-stroke: #EDEDED;
+    --chip-bg: transparent;
+    --kbd-bg: #EDEDED;
+    --kbd-fg: #000000;
+    --button-bg: #000000;
+    --button-stroke: transparent;
+    --email-color: #000000;
+}
+
+* {
+    box-sizing: border-box
+}
+
+/* body,
+html,
+#root {
+    min-height: 100%;
+    height: auto;
+    margin: 0;
+    overflow-y: auto;
+} */
+
+.app {
+    position: relative;
+    min-height: 100vh;
+    background: var(--bg);
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+    color: var(--fg);
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+.app::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+    /* let .app background show through */
+    z-index: 0;
+    pointer-events: none;
+    /* prevents interference */
+}
+
+/* behind content */
+
+/* Header */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: var(--pad-y-header) var(--pad-x-hero);
+}
+
+.logo svg {
+    color: var(--fg)
+}
+
+.logo {
+    width: 90px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.theme-toggle {
+    padding: 8px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid var(--stroke);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    outline: none;
+    box-shadow: none;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus,
+.theme-toggle:focus-visible,
+.theme-toggle:active {
+    outline: none;
+    box-shadow: none;
+    border-color: var(--stroke);
+    cursor: url('/src/assets/cursor-2.svg') 8 8, auto;
+    /* keeps default border */
+
+}
+
+.theme-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+/* Hero */
+.hero {
+    padding: var(--pad-y-hero) var(--pad-x-hero);
+}
+
+.hero-inner {
+    display: flex;
+    gap: 80px;
+    align-items: center;
+}
+
+.left-column {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-inner);
+}
+
+.right-column {
+    flex: 0 0 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* image - locked aspect ratio 1600x1200 -> 4/3 */
+/* Hero Profile Image (same ratio & feel as portfolio) */
+.hero-profile-image {
+    width: 100%;
+    max-width: 1600px;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: var(--image-radius);
+    display: block;
+
+    opacity: 0;
+    transform: translate3d(0, 50px, 0);
+    will-change: transform, opacity;
+
+    animation: slideUpSmooth 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes slideUpSmooth {
+    0% {
+        transform: translate3d(0, 50px, 0);
+        opacity: 0;
+    }
+
+    60% {
+        transform: translate3d(0, -5px, 0);
+        opacity: 1;
+    }
+
+    80% {
+        transform: translate3d(0, 2px, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 800px) {
+    .hero-profile-image {
+        width: 100%;
+    }
+}
+
+.chips {
+    display: flex;
+    gap: var(--gap-small);
+}
+
+.chip {
+    background-color: var(--bg);
+    display: inline-block;
+    padding: 8px 12px 6px 12px;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 500;
+    border: 1px solid var(--chip-stroke);
+}
+
+.heading h1 {
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -0.04em;
+    margin: 0;
+    font-weight: 400;
+}
+
+.reveal-row {
+    display: flex;
+    font-family: 'JetBrains Mono', monospace;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.small.muted {
+    font-size: 16px;
+    color: var(--muted);
+}
+
+.kbd {
+    padding: 0px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--kbd-bg);
+    color: var(--kbd-fg);
+    border: none;
+    font-size: 16px;
+}
+
+.email-wrapper {
+    display: inline-block;
+}
+
+.email {
+    margin-left: 8px;
+    color: var(--email-color);
+    transition: filter 200ms ease;
+    font-weight: 500;
+}
+
+.cta-row {
+    display: flex;
+    gap: 12px;
+}
+
+.cta {
+    cursor: url('/src/assets/cursor-2.svg') 8 8, auto;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: var(--button-bg);
+    color: var(--fg);
+    border: 1px solid var(--button-stroke);
+    font-size: 16px;
+    line-height: 18px;
+    transition: background 0.2s ease;
+    outline: none;
+    /* removes default focus outline */
+}
+
+.cta:hover {
+    background-color: #29292b;
+    border: 1px solid var(--button-stroke);
+}
+
+.cta:active {
+    background-color: #3b3c3d;
+}
+
+.cta:focus {
+    outline: none;
+    /* ensures focus ring is removed on click/tab */
+}
+
+/* Light mode override for button text */
+.light .cta {
+    color: #ffffff;
+    box-shadow: var(--shadow-elevation-dark)
+}
+
+.light .cta-section {
+    box-shadow: var(--shadow-elevation-dark)
+}
+
+/* Icon inside button */
+.cta img {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Portfolio Section */
+.portfolio {
+    padding: 64px var(--pad-x-hero);
+}
+
+.portfolio h2 {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -0.04em;
+    font-weight: 400;
+    margin-bottom: 56px;
+    color: var(--fg);
+}
+
+.portfolio-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+
+/* Portfolio Card */
+.portfolio-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Header: Logo + Project Info */
+.portfolio-header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.portfolio-logo {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.portfolio-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-name {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--fg);
+}
+
+.project-date {
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+    color: #A6A6A6;
+}
+
+/* Project Description */
+.project-description {
+    font-size: 20px;
+    color: var(--fg);
+    line-height: 1.4;
+}
+
+/* Project Images */
+.project-images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    margin-top: 16px;
+}
+
+.project-images img.project-image {
+    width: 100%;
+    aspect-ratio: 3/3;
+    object-fit: cover;
+    border-radius: var(--image-radius);
+    min-width: 0;
+    will-change: transform;
+}
+
+/* Make every third image span full width */
+/* .project-images img.project-image:nth-child(3n) {
+    grid-column: 1 / -1;
+} */
+
+@media (max-width: 600px) {
+    .project-images {
+        grid-template-columns: 1fr;
+    }
+
+    /* Ensure consistent stacking on small screens */
+    .project-images img.project-image:nth-child(3n) {
+        grid-column: auto;
+    }
+}
+
+/* Light mode overrides */
+.light .project-name,
+.light .project-description {
+    color: var(--fg);
+}
+
+/* Scroll Tabs Section */
+.scroll-tabs-section {
+    padding: var(--pad-y-hero) var(--pad-x-hero);
+}
+
+.scroll-tabs-section .tabs-container {
+    display: flex;
+    gap: 48px;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--chip-stroke);
+    background: var(--bg);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    width: calc(100% + 1px);
+    /* increase width to cover the flex gap */
+}
+
+.scroll-tabs-section .tabs-container::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+}
+
+/* Tab Headings styled like portfolio H2 */
+.scroll-tabs-section .tab-heading {
+    font-size: 24px;
+    line-height: 40px;
+    letter-spacing: -0.04em;
+    font-weight: 400;
+    color: var(--muted);
+    /* inactive gray */
+    margin: 0;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding-bottom: 4px;
+    white-space: nowrap;
+    border: none;
+}
+
+.scroll-tabs-section .tab-heading.active {
+    color: var(--fg);
+    /* active white */
+    border-bottom: none;
+    /* remove any underline */
+}
+
+.scroll-tabs-section .tab-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 96px;
+    margin-top: 32px;
+}
+
+/* Only apply min-height to non-CTA tab contents */
+/* .scroll-tabs-section .tab-content:not(.cta-section) {
+    min-height: 70vh;
+} */
+
+/* CTA section styling */
+
+/* Default shadow for dark CTA section */
+.cta-section {
+    width: 100%;
+    padding: 72px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    border-radius: 32px;
+    background: var(--cta-bg);
+    color: var(--cta-color);
+}
+
+.cta-wrapper.light {
+    background: #0D0E10;
+    /* dark background for light mode */
+    color: #ffffff;
+    /* text color */
+}
+
+.cta-heading {
+    font-size: 32px;
+    font-weight: 400;
+    font-family: 'JetBrains Mono';
+    letter-spacing: -0.04em;
+    line-height: 48px;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.linkedin {
+    padding: 10px 10px !important;
+}
+
+.nospace {
+    margin-right: 0px !important;
+
+}
+
+.cta-buttons .cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: var(--button-bg);
+    color: var(--fg);
+    border: 1px solid var(--button-stroke);
+    font-size: 16px;
+    line-height: 18px;
+    transition: background 0.2s ease;
+    outline: none;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: var(--shadow-elevation-dark);
+}
+
+.cta-buttons .cta:hover {
+    background-color: #414142;
+    border: 1px solid var(--button-stroke);
+}
+
+/* Active (pressed) state */
+.cta-buttons .cta:active {
+    background-color: #505152;
+}
+
+/* Focus state (keyboard/tab) */
+.cta-buttons .cta:focus {
+    outline: none;
+}
+
+.cta-wrapper.dark .cta {
+    background: #0D0E10;
+    color: #ffffff;
+}
+
+.cta-wrapper.light .cta {
+    background: #ffffff;
+    color: #0D0E10;
+}
+
+.cta-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.cta-light:hover {
+    background-color: #fdfdfd;
+}
+
+/* Active (pressed) state */
+.cta-light:active {
+    background-color: #e9e9e9;
+}
+
+/* Focus state (keyboard/tab) */
+.cta-light:focus {
+    outline: none;
+}
+
+.pricing-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.pricing-cards {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 40px;
+    justify-content: center;
+    flex-direction: row;
+    background-color: #151618;
+    /* fixed */
+}
+
+.pricing-card:not(.pricing-card-cta) {
+    align-self: flex-start;
+    height: auto;
+    transition: background-color 0.25s ease;
+}
+
+.pricing-card:not(.pricing-card-cta):hover {
+    background-color: #212225;
+    /* fixed */
+    /* box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4); */
+    /* fixed replacement */
+}
+
+.pricing-card {
+    border-radius: 32px;
+    overflow: hidden;
+    background: #151619;
+    /* fixed */
+    width: 100%;
+    color: #ffffff;
+    /* fixed */
+    display: flex;
+    flex-direction: column;
+    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+
+/* Top section */
+.pricing-card-header {
+    padding: 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.pricing-card-header h3 {
+    font-size: 24px;
+    font-weight: 400;
+    /* font-family: 'JetBrains Mono'; */
+    color: #fff;
+    letter-spacing: -0.04em;
+    line-height: 36px;
+}
+
+.pricing-card-header p {
+    font-size: 16px;
+    color: #c2c2c2;
+    margin-top: 4px;
+}
+
+/* Features */
+.pricing-features {
+    padding: 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.feature p {
+    font-size: 16px;
+    color: #c2c2c2;
+    margin: 0;
+}
+
+.feature-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* Bottom section */
+.pricing-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 32px;
+}
+
+.price-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.price-sub {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
+    color: #c2c2c2;
+}
+
+.price-info h4 {
+    font-size: 24px;
+    font-weight: 400;
+    /* font-family: 'JetBrains Mono'; */
+    color: #fff;
+    letter-spacing: -0.04em;
+    line-height: 36px;
+}
+
+/* Reuse your existing button stylings */
+.cta {
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: var(--button-bg);
+    color: var(--fg);
+    border: 1px solid var(--button-stroke);
+    font-size: 16px;
+    line-height: 18px;
+    transition: background 0.2s ease;
+    outline: none;
+}
+
+/* New styling for third card */
+.pricing-card-cta {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 32px;
+    border-radius: 32px;
+    background: #ffffff;
+    /* fixed – no var() */
+    color: #000000;
+    /* fixed */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    /* fixed */
+    height: 100%;
+}
+
+.pricing-card-cta .cta-heading {
+    font-size: 24px;
+    font-weight: 400;
+    font-family: 'JetBrains Mono';
+    color: #000;
+    letter-spacing: -0.04em;
+    line-height: 34px;
+}
+
+.pricing-card-cta .cta-buttons {
+    margin-top: 24px;
+    flex-direction: column;
+}
+
+.pricing-card-cta .cta-light {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #0D0E10;
+    border: 1px solid #E3E3E3;
+    font-size: 16px;
+    line-height: 18px;
+    transition: background 0.2s ease;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+}
+
+.pricing-card-cta .cta-light:hover {
+    background-color: #f5f5f5;
+}
+
+.pricing-card-cta .cta-light:active {
+    background-color: #e9e9e9;
+}
+
+.pricing-card-cta .cta-light:focus {
+    outline: none;
+}
+
+.cta-pricing {
+    cursor: url('/src/assets/cursor-2.svg') 8 8, auto;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #141516;
+    /* fixed replacement for var(--button-bg) */
+    color: #ffffff;
+    /* fixed replacement for var(--fg) */
+    border: 1px solid #2A2A2A;
+    /* fixed replacement for var(--button-stroke) */
+    font-size: 16px;
+    line-height: 18px;
+    transition: background 0.2s ease;
+    outline: none;
+}
+
+.cta-pricing:hover {
+    background-color: #202021;
+    border: 1px solid #2A2A2A;
+    /* fixed */
+}
+
+.cta-pricing:active {
+    background-color: #2F3132;
+}
+
+.cta-pricing:focus {
+    outline: none;
+}
+
+.extended {
+    width: 100%;
+}
+
+.footer-final {
+    padding: 32px var(--pad-x-hero) 72px var(--pad-x-hero);
+    text-align: center;
+}
+
+.footer-final p {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
+    color: var(--fg)
+}
+
+
+.video-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    padding: 8px 0px 100px 0px
+}
+
+.video-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    /* hides controls interaction */
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .portfolio {
+        padding: 64px 32px;
+    }
+}
+
+@media (max-width: 800px) {
+    .project-images {
+        flex-direction: column;
+    }
+
+    .project-images img.project-image {
+        flex: 1 1 100%;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width:1200px) {
+    :root {
+        --pad-x-hero: 32px
+    }
+
+    .right-column {
+        flex-basis: 40%;
+    }
+}
+
+@media (max-width:800px) {
+    .hero-inner {
+        flex-direction: column;
+    }
+
+    .left-column {
+        width: 100%;
+    }
+
+    .right-column {
+        width: 100%;
+
+    }
+
+    .pricing-cards {
+        flex-direction: column;
+    }
+
+    .pricing-card-cta {
+        height: auto;
+    }
+
+    /* .scroll-tabs-section {
+        padding: 100px 24px;
+    } */
+}
+
+@media (max-width:440px) {
+
+    .heading h1 {
+        font-size: 36px;
+        line-height: 44px;
+    }
+
+    .cta {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .cta-row {
+        flex-direction: column;
+    }
+
+    .cta-light {
+        width: 100%;
+    }
+
+    .portfolio-images {
+        flex-direction: column;
+    }
+
+    .cta-section {
+        padding: 32px;
+        gap: 24px;
+    }
+
+    .cta-heading {
+        font-size: 24px;
+        line-height: 34px;
+
+    }
+
+    .pricing-card-header,
+    .pricing-features {
+        padding: 24px;
+    }
+
+    .pricing-footer {
+        flex-direction: column;
+        gap: 24px;
+        padding: 32px 32px;
+
+    }
+
+    .price-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 100%;
+        flex-direction: row;
+    }
+
+    .price-sub {
+        height: 24px;
+    }
+
+    .pricing-cards {
+        flex-direction: column;
+    }
+
+    .pricing-card-cta .cta-buttons {
+        flex-direction: column;
+    }
+
+    .cta-pricing {
+        width: 100%;
+    }
+}
