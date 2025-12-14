@@ -6,7 +6,7 @@ import logoDark from "./assets/logo-dark.svg";
 import logoLight from "./assets/logo-light.svg";
 import SunIcon from "./assets/sun.svg";
 import MoonIcon from "./assets/moon.svg";
-import MyImage from './assets/myimg.jpg';
+import MyImage from './assets/myimg.jpeg';
 import Meet from './assets/meet.svg'
 import CheckIcon from './assets/check-icon.svg'
 
